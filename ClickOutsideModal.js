@@ -1,5 +1,4 @@
 console.log('it works');
-console.log();
 
 //select buttons of cards, modal outer, modal inner
 const cardButtons = document.querySelectorAll('.card button');
@@ -12,7 +11,6 @@ function handleButtonClick(event){
     
     //getting immediate card near to current button  which was clicked
     const currentCard = currentButton.closest('.card');
-    console.log(currentCard);
     
     // get required details from current card whos button is clicked
     const cardDesc = currentCard.dataset.description;
@@ -22,7 +20,7 @@ function handleButtonClick(event){
     
     // populate the details we got into moduleInner
     modalInner.innerHTML = `
-        <img src="${imgSrc.replace('200','600')}" alt="${cardDesc}">
+        <img width="600" height="600" src="${imgSrc.replace('200','600')}" alt="${cardDesc}">
         <p>${cardName}</p>
     `;
 
@@ -33,4 +31,27 @@ function handleButtonClick(event){
 //attach listeners to buttons
 cardButtons.forEach(button => {
     button.addEventListener('click', handleButtonClick);
+})
+
+
+// close modal inner 
+function closeModal(){
+    modalOuter.classList.remove('open');
+}
+
+// close modal on clicking outside modal
+modalOuter.addEventListener('click', event =>{
+     let isOutside = !event.target.closest('.modal-inner');
+     if(isOutside){
+         closeModal();
+     }
+    
+});
+
+// close modal on clicking ESC key
+// listen to esc keydown , on key down call closemodal
+window.addEventListener('keydown',(event)=>{
+    if(event.key == 'Escape'){
+        closeModal();
+    }
 })
